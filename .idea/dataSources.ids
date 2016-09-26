@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - seckill@localhost" uuid="ef493a9e-4e07-41e3-9fe0-5516ea35ecdb">
+    <database-info product="MySQL" version="5.5.47" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="mixed" quoted-identifiers="upper"/>
+    <database-model serializer="dbm" rdbms="MYSQL" format-version="2.4">
+      <schema id="1" name="seckill"/>
+      <table id="2" parent="1" name="success_killid">
+        <comment>秒杀成功明细表</comment>
+      </table>
+      <table id="3" parent="1" name="seckill">
+        <comment>秒杀库存表</comment>
+      </table>
+      <column id="4" parent="2" name="seckill_id">
+        <comment>秒杀商品id</comment>
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="5" parent="2" name="user_phone">
+        <comment>用户手机号</comment>
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="6" parent="2" name="state">
+        <comment>状态标示：-1：无效 0：成功 1：已付款</comment>
+        <mandatory>1</mandatory>
+        <data-type>tinyint(4)</data-type>
+        <default-expression>&apos;-1&apos;</default-expression>
+      </column>
+      <column id="7" parent="2" name="create_time">
+        <comment>创建时间</comment>
+        <mandatory>1</mandatory>
+        <data-type>timestamp</data-type>
+        <default-expression>&apos;CURRENT_TIMESTAMP&apos;</default-expression>
+      </column>
+      <index id="8" parent="2" name="idx_create_time">
+        <columns>create_time</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="9" parent="2" name="PRIMARY">
+        <columns>seckill_id
+user_phone</columns>
+        <primary>1</primary>
+      </key>
+      <column id="10" parent="3" name="seckill_id">
+        <comment>商品库存id</comment>
+        <mandatory>1</mandatory>
+        <data-type>bigint(20)</data-type>
+      </column>
+      <column id="11" parent="3" name="name">
+        <comment>商品名称</comment>
+        <mandatory>1</mandatory>
+        <data-type>varchar(120)</data-type>
+      </column>
+      <column id="12" parent="3" name="number">
+        <comment>库存数量</comment>
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="13" parent="3" name="start_time">
+        <comment>秒杀开始时间</comment>
+        <mandatory>1</mandatory>
+        <data-type>timestamp</data-type>
+        <default-expression>&apos;CURRENT_TIMESTAMP&apos;</default-expression>
+      </column>
+      <column id="14" parent="3" name="end_time">
+        <comment>秒杀结束时间</comment>
+        <mandatory>1</mandatory>
+        <data-type>timestamp</data-type>
+        <default-expression>&apos;0000-00-00 00:00:00&apos;</default-expression>
+      </column>
+      <column id="15" parent="3" name="create_time">
+        <comment>创建时间</comment>
+        <mandatory>1</mandatory>
+        <data-type>timestamp</data-type>
+        <default-expression>&apos;0000-00-00 00:00:00&apos;</default-expression>
+      </column>
+      <index id="16" parent="3" name="idx_create_time">
+        <columns>create_time</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="17" parent="3" name="idx_end_time">
+        <columns>end_time</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="18" parent="3" name="idx_start_time">
+        <columns>start_time</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="19" parent="3" name="PRIMARY">
+        <columns>seckill_id</columns>
+        <primary>1</primary>
+      </key>
+      <trigger id="20" parent="3" name="update_example_trigger"/>
+    </database-model>
+  </data-source>
+</component>
