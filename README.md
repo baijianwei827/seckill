@@ -3,12 +3,9 @@ java电商系统核心业务-秒杀系统（Spring+SpringMVC+MyBatis）
 
 
 本txt参见github上该项目的总结文档
-
-
 项目总结：
 	秒杀业务场景具有典型的“事务”特性
 	秒杀/红包类的需求越来越常见
-
 1.创建项目：maven指令
 	指令：mvn archetype:generate -DgroupId=org.seckill -DartifactId=seckill -DarchetypeArtifactId=maven-archetype-webapp -DarchetypeCatalog=internal
 	-DgroupId=org.seckill -DartifactId=seckill   ----->  项目坐标
