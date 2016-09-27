@@ -55,7 +55,7 @@ public class SeckillController {
     @RequestMapping(value = "/{seckillId}/exposer",method =RequestMethod.POST,
                     produces={"application/json;charset=UTF-8"})
     @ResponseBody
-    public SeckillResult<Exposer> exporer(Long seckillId){
+    public SeckillResult<Exposer> exporer(@PathVariable("seckillId") Long seckillId){
         SeckillResult<Exposer> result;
         try{
          Exposer exposer=secKillService.exportSeckillUrl(seckillId);
@@ -75,11 +75,11 @@ public class SeckillController {
      * @return
      */
     @RequestMapping(value="/{seckillId}/{md5}/execution",method =RequestMethod.POST,
-            produces={"application/json;charset=UTF-8"})
+            produces = {"application/json; charset=utf-8" })
     @ResponseBody
     public SeckillResult<SeckillExecution> excute(@PathVariable("seckillId") Long seckillId,
                                                   @PathVariable("md5") String md5,
-                                                  @CookieValue(value = "phone",required = false) Long phone){
+                                                  @CookieValue(value = "killPhone",required = false) Long phone){
         if(phone==null){
             return new SeckillResult<SeckillExecution>(false,"手机号未注册");
         }
@@ -90,14 +90,14 @@ public class SeckillController {
             return result;
         }catch(RepeatKillException e){
             SeckillExecution execution=new SeckillExecution(seckillId, SeckillStateEnum.REPEAT_KILL);
-            return new  SeckillResult(false,execution);
+            return new  SeckillResult(true,execution);
         } catch (SeckillCloseException e){
             SeckillExecution execution=new SeckillExecution(seckillId, SeckillStateEnum.END);
-            return new  SeckillResult(false,execution);
+            return new  SeckillResult(true,execution);
         } catch (Exception e){
             logger.error(e.getMessage(),e);
             SeckillExecution execution=new SeckillExecution(seckillId, SeckillStateEnum.INNER_ERROR);
-            return new  SeckillResult(false,execution);
+            return new  SeckillResult(true,execution);
         }
     }
 
@@ -106,6 +106,7 @@ public class SeckillController {
      * @return
      */
     @RequestMapping(value="/time/now",method =RequestMethod.GET)
+    @ResponseBody
     public SeckillResult<Long>  time(){
         Date now=new Date();
         return new SeckillResult(true,now.getTime());

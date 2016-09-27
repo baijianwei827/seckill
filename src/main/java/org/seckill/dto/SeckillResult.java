@@ -2,12 +2,12 @@ package org.seckill.dto;
 
 /**
  * Created by liwc on 2016/9/27.
- * 封装json结果
+ * ajax发送封装json结果
  */
 public class SeckillResult<T> {
     private boolean success;
     private T data;
-    private String error;
+    private String error;//错误原因
 
     public SeckillResult(boolean success,T data) {
         this.success = success;

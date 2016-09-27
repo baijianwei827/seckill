@@ -5,4 +5,20 @@
          version="3.0"
          metadata-complete="true">
 
+    <!--配置dispatchservlet-->
+    <servlet>
+        <servlet-name>seckill-dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!--spring mvc需要加载的配置文件-->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring/spring-*.xml</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>seckill-dispatcher</servlet-name>
+        <!--默认匹配所有请求-->
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
 </web-app>
