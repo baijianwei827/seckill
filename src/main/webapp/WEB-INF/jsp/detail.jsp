@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <title>秒杀详情页</title>
-    <%@include file="common/head.jsp"%>
+    <%@include file="common/head.jsp" %>
 </head>
 <body>
 <div class="container">
@@ -35,7 +35,7 @@
                 <div class="row">
                     <div class="col-xs-8 col-xs-offset-2">
                         <input type="text" name="killphone" id="killphoneKey"
-                               placeholder="填手机号^O^" class="form-control" />
+                               placeholder="填手机号^O^" class="form-control"/>
                     </div>
                 </div>
             </div>
@@ -61,13 +61,13 @@
 <!--交互逻辑-->
 <script src="${pageContext.request.contextPath}/resources/script/seckill.js" type="text/javascript"></script>
 <script type="text/javascript">
-    $(function(){
+    $(function () {
         //使用el表达式出入参数
-       seckill.detail.init({
-           seckillId:${seckill.seckillId},
-           startTime:${seckill.startTime.time},
-           endTime:${seckill.endTime.time}
-       });
+        seckill.detail.init({
+            seckillId:${seckill.seckillId},
+            startTime:${seckill.startTime.time},
+            endTime:${seckill.endTime.time}
+        });
     });
 </script>
 

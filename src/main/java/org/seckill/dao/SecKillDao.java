@@ -12,24 +12,27 @@ import java.util.List;
 public interface SecKillDao {
     /**
      * 减库存
+     *
      * @param seckillId
      * @param killTime
      * @return 如果影响>=1,表示更新行数
      */
-    int reduceNumber(@Param("seckillId")long seckillId,@Param("killTime") Date killTime);
+    int reduceNumber(@Param("seckillId") long seckillId, @Param("killTime") Date killTime);
 
     /**
      * 根据id查询库存
+     *
      * @param seckillId
      * @return
      */
-    Seckill queryById( long seckillId);
+    Seckill queryById(long seckillId);
 
     /**
      * 分页,需要在参数前增加注解:@Param,用于告诉mybaits所传的参数
+     *
      * @param offset
      * @param limit
      * @return
      */
-    List<Seckill> queryAll(@Param("offset") int offset,@Param("limit") int limit);
+    List<Seckill> queryAll(@Param("offset") int offset, @Param("limit") int limit);
 }

@@ -9,12 +9,12 @@ public class SeckillResult<T> {
     private T data;
     private String error;//错误原因
 
-    public SeckillResult(boolean success,T data) {
+    public SeckillResult(boolean success, T data) {
         this.success = success;
-        this.data=data;
+        this.data = data;
     }
 
-    public SeckillResult( boolean success,String error) {
+    public SeckillResult(boolean success, String error) {
         this.error = error;
         this.success = success;
     }

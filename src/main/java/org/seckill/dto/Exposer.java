@@ -18,6 +18,7 @@ public class Exposer {
 
     /**
      * 商品不参与秒杀
+     *
      * @param exposed
      * @param seckillId
      */
@@ -28,22 +29,24 @@ public class Exposer {
 
     /**
      * 秒杀结束
+     *
      * @param exposed
      * @param seckillId
      * @param now
      * @param start
      * @param end
      */
-    public Exposer(boolean exposed,long seckillId, long now, long start, long end) {
+    public Exposer(boolean exposed, long seckillId, long now, long start, long end) {
         this.exposed = exposed;
         this.now = now;
         this.start = start;
         this.end = end;
-        this.seckillId=seckillId;
+        this.seckillId = seckillId;
     }
 
     /**
      * 秒杀开始
+     *
      * @param exposed
      * @param md5
      * @param seckillId

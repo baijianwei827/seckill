@@ -30,7 +30,7 @@ import java.util.List;
 @Service
 public class SeckillServiceImpl implements SecKillService {
 
-    private Logger logger= LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     //注入service依赖
     @Autowired
     private SecKillDao secKillDao;
@@ -42,7 +42,7 @@ public class SeckillServiceImpl implements SecKillService {
     private final String slat = "sadkfjalsdjfalksj23423^&*^&%&!EBJKH";
 
     public List<Seckill> getSecKillList() {
-        return secKillDao.queryAll(0,4);
+        return secKillDao.queryAll(0, 4);
     }
 
     public Seckill getById(long seckillId) {
@@ -52,6 +52,7 @@ public class SeckillServiceImpl implements SecKillService {
     /**
      * 秒杀地址暴露
      * 1.当数据库中查不到此商品信息,则该商品不参与秒杀
+     *
      * @param seckillId
      * @return
      */
@@ -60,36 +61,37 @@ public class SeckillServiceImpl implements SecKillService {
          * 如果没有秒杀产品记录,则代表产品不参与秒杀
          */
 
-        Seckill secKill=secKillDao.queryById(seckillId);
-        if(secKill==null){
-            return new Exposer(false,seckillId);
+        Seckill secKill = secKillDao.queryById(seckillId);
+        if (secKill == null) {
+            return new Exposer(false, seckillId);
         }
 
-        Date startTime=secKill.getStartTime();
-        Date endTime=secKill.getEndTime();
-        Date nowTime=new Date();
+        Date startTime = secKill.getStartTime();
+        Date endTime = secKill.getEndTime();
+        Date nowTime = new Date();
         /**
          * 如果当前时间小于开始时间,则秒杀没有开始
          * 如果当前时间大于结束时间,则秒杀已经结束
          */
-        if(nowTime.getTime()<startTime.getTime()||nowTime.getTime()>endTime.getTime()){
-            return new Exposer(false,seckillId,nowTime.getTime(),startTime.getTime(),endTime.getTime());
+        if (nowTime.getTime() < startTime.getTime() || nowTime.getTime() > endTime.getTime()) {
+            return new Exposer(false, seckillId, nowTime.getTime(), startTime.getTime(), endTime.getTime());
         }
         /**
          * 秒杀开启
          */
-        String md5=getMd5(seckillId);
-        return new Exposer(true,md5,seckillId);
+        String md5 = getMd5(seckillId);
+        return new Exposer(true, md5, seckillId);
     }
 
     /**
      * MD5的实现
+     *
      * @param seckillId
      * @return
      */
-    private  String getMd5(long seckillId){
-        String base=seckillId+"/"+slat;
-        String md5= DigestUtils.md5DigestAsHex(base.getBytes());
+    private String getMd5(long seckillId) {
+        String base = seckillId + "/" + slat;
+        String md5 = DigestUtils.md5DigestAsHex(base.getBytes());
         return md5;
     }
 
@@ -98,9 +100,10 @@ public class SeckillServiceImpl implements SecKillService {
      * 1.md5比对失败或者MD5为空,则url被重写
      * 2.如果减库存失败,则秒杀关闭
      * 3.如果插入秒杀记录失败,则为重复秒杀
+     *
      * @param seckillId
      * @param userPhone
-     * @param md5 用于判断MD5是否变化
+     * @param md5       用于判断MD5是否变化
      * @return
      * @throws SeckillException
      * @throws RepeatKillException
@@ -108,12 +111,12 @@ public class SeckillServiceImpl implements SecKillService {
      */
     @Transactional
     public SeckillExecution executeSeckill(long seckillId, long userPhone, String md5) throws SeckillException, RepeatKillException, SeckillCloseException {
-        if(md5==null||!md5.equals(getMd5(seckillId))){
+        if (md5 == null || !md5.equals(getMd5(seckillId))) {
             throw new SeckillException("seckill data rewrite");
         }
         //执行秒杀逻辑
         //减库存
-        Date nowTime=new Date();
+        Date nowTime = new Date();
         try {
             int updateCount = secKillDao.reduceNumber(seckillId, nowTime);
             if (updateCount <= 0) {
@@ -131,13 +134,13 @@ public class SeckillServiceImpl implements SecKillService {
                     return new SeckillExecution(seckillId, SeckillStateEnum.SUCCESS, successKilled);
                 }
             }
-        }catch(SeckillCloseException e1) {
+        } catch (SeckillCloseException e1) {
             throw e1;
-        }catch(RepeatKillException e2){
+        } catch (RepeatKillException e2) {
             throw e2;
-        } catch (Exception e){
-            logger.error(e.getMessage(),e);
-            throw new SeckillException("seckill inner error"+e.getMessage());
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new SeckillException("seckill inner error" + e.getMessage());
         }
     }
 }
