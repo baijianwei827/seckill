@@ -1,7 +1,6 @@
-Java高并发秒杀项目（Spring+SpringMVC+MyBatis）：
+Java电商系统---高并发秒杀项目（Spring+SpringMVC+MyBatis）：
 	秒杀业务场景具有典型的“事务”特性
 	秒杀/红包类的需求越来越常见
-
 1.创建项目：maven指令
 	指令：mvn archetype:generate -DgroupId=org.seckill -DartifactId=seckill -DarchetypeArtifactId=maven-archetype-webapp -DarchetypeCatalog=internal
 	-DgroupId=org.seckill -DartifactId=seckill   ----->  项目坐标
