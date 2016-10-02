@@ -124,20 +124,24 @@ public class SeckillServiceImpl implements SecKillService {
         if (md5 == null || !md5.equals(getMd5(seckillId))) {
             throw new SeckillException("seckill data rewrite");
         }
-        //执行秒杀逻辑
-        //减库存
+        /**
+         * 执行秒杀逻辑,调整代码顺序,原顺序为减库存在执行插入操作
+         * 现在为插入操作之后进行更新库存,为了抵挡一部分的重复秒杀的行为
+         * 并将减少行级锁的控制
+         */
         Date nowTime = new Date();
         try {
-            int updateCount = secKillDao.reduceNumber(seckillId, nowTime);
-            if (updateCount <= 0) {
-                //没有更新记录,秒杀结束
-                throw new SeckillCloseException("seckill is closed");
+            //记录购买行为
+            int insertCount = successKilledDao.sucessKilled(seckillId, userPhone);
+            if (insertCount <= 0) {
+                //重复秒杀
+                throw new RepeatKillException("seckill repeat");
             } else {
-                //记录购买行为
-                int insertCount = successKilledDao.sucessKilled(seckillId, userPhone);
-                if (insertCount <= 0) {
-                    //重复秒杀
-                    throw new RepeatKillException("seckill repeat");
+                //减库存,热点商品的行级锁问题
+                int updateCount = secKillDao.reduceNumber(seckillId, nowTime);
+                if (updateCount <= 0) {
+                    //没有更新记录,秒杀结束
+                    throw new SeckillCloseException("seckill is closed");
                 } else {
                     //秒杀成功
                     SuccessKilled successKilled = successKilledDao.queryBykIdWithSecKilled(seckillId, userPhone);
