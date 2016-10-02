@@ -3,6 +3,7 @@ package org.seckill.service.impl;
 import com.sun.org.apache.regexp.internal.RE;
 import org.seckill.dao.SecKillDao;
 import org.seckill.dao.SuccessKilledDao;
+import org.seckill.dao.cache.RedisDao;
 import org.seckill.dto.Exposer;
 import org.seckill.dto.SeckillExecution;
 import org.seckill.entity.Seckill;
@@ -37,6 +38,8 @@ public class SeckillServiceImpl implements SecKillService {
 
     @Autowired
     private SuccessKilledDao successKilledDao;
+    @Autowired
+    private RedisDao redisDao;
 
     // md5盐值字符串，用于混淆MD5
     private final String slat = "sadkfjalsdjfalksj23423^&*^&%&!EBJKH";
@@ -57,15 +60,22 @@ public class SeckillServiceImpl implements SecKillService {
      * @return
      */
     public Exposer exportSeckillUrl(long seckillId) {
-        /**
-         * 如果没有秒杀产品记录,则代表产品不参与秒杀
-         */
-
-        Seckill secKill = secKillDao.queryById(seckillId);
-        if (secKill == null) {
-            return new Exposer(false, seckillId);
+        //优化的:缓存优化
+        //1.访问redis
+        Seckill  secKill=redisDao.getSeckill(seckillId);
+        if(secKill==null){
+            //2.访问数据库
+            secKill = secKillDao.queryById(seckillId);
+            if (secKill == null) {
+                /**
+                 * 如果没有秒杀产品记录,则代表产品不参与秒杀
+                 */
+                return new Exposer(false, seckillId);
+            }else{
+                //3.放入redis
+                redisDao.putSeckill(secKill);
+            }
         }
-
         Date startTime = secKill.getStartTime();
         Date endTime = secKill.getEndTime();
         Date nowTime = new Date();
