@@ -23,43 +23,55 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring/spring-dao.xml",
-                        "classpath:spring/spring-service.xml"})
+        "classpath:spring/spring-service.xml"})
 public class SeckillServiceImplTest {
-    private Logger logger= LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private SecKillService secKillService;
 
     @Test
     public void testGetSecKillList() throws Exception {
-        List<Seckill> list=secKillService.getSecKillList();
-        logger.info("list={}",list);
+        List<Seckill> list = secKillService.getSecKillList();
+        logger.info("list={}", list);
     }
 
     @Test
     public void testGetById() throws Exception {
-        Seckill seckill=secKillService.getById(1004);
-        logger.info("seckill={}",seckill);
+        Seckill seckill = secKillService.getById(1004);
+        logger.info("seckill={}", seckill);
     }
 
     @Test
     public void testExportSeckillLogic() throws Exception {
-        long id=1004;
-        Exposer exposer=secKillService.exportSeckillUrl(1004);
-        if(exposer.isExposed()){
-            logger.info("exposer={}",exposer);
-            long phone=13502171128L;
-            String md5=exposer.getMd5();
-            try{
-                SeckillExecution seckillExecution=secKillService.executeSeckill(id,phone,md5);
-                logger.info("result={}",seckillExecution);
-            }catch (RepeatKillException e){
+        long id = 1004;
+        Exposer exposer = secKillService.exportSeckillUrl(1004);
+        if (exposer.isExposed()) {
+            logger.info("exposer={}", exposer);
+            long phone = 13502171128L;
+            String md5 = exposer.getMd5();
+            try {
+                SeckillExecution seckillExecution = secKillService.executeSeckill(id, phone, md5);
+                logger.info("result={}", seckillExecution);
+            } catch (RepeatKillException e) {
                 logger.error(e.getMessage());
-            }catch(SeckillCloseException e){
+            } catch (SeckillCloseException e) {
                 logger.error(e.getMessage());
             }
-        }else{
-            logger.warn("exposer="+exposer);
+        } else {
+            logger.warn("exposer=" + exposer);
         }
 
+    }
+
+    @Test
+    public void testExecuteSeckillProcedure() throws Exception {
+        long seckillId = 1004;
+        long phone = 13631231234L;
+        Exposer exposer = secKillService.exportSeckillUrl(seckillId);
+        if (exposer.isExposed()) {
+            String md5 = exposer.getMd5();
+            SeckillExecution execution = secKillService.executeSeckillProcedure(seckillId, phone, md5);
+            logger.info(execution.getStateInfo());
+        }
     }
 }

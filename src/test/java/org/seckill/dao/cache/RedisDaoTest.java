@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring/spring-dao.xml"})
 public class RedisDaoTest {
-    private  long id=1005;
+    private  long id=1004;
     @Autowired
     private  RedisDao redisDao;
     @Autowired
