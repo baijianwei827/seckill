@@ -65,8 +65,8 @@ public class SeckillServiceImpl implements SecKillService {
     public Exposer exportSeckillUrl(long seckillId) {
         //优化的:缓存优化
         //1.访问redis
-        Seckill  secKill=redisDao.getSeckill(seckillId);
-        if(secKill==null){
+        Seckill secKill = redisDao.getSeckill(seckillId);
+        if (secKill == null) {
             //2.访问数据库
             secKill = secKillDao.queryById(seckillId);
             if (secKill == null) {
@@ -74,7 +74,7 @@ public class SeckillServiceImpl implements SecKillService {
                  * 如果没有秒杀产品记录,则代表产品不参与秒杀
                  */
                 return new Exposer(false, seckillId);
-            }else{
+            } else {
                 //3.放入redis
                 redisDao.putSeckill(secKill);
             }
@@ -163,6 +163,7 @@ public class SeckillServiceImpl implements SecKillService {
 
     /**
      * 执行秒杀(调用存储过程)
+     *
      * @param seckillId
      * @param userPhone
      * @param md5       用于判断MD5是否变化
@@ -171,7 +172,7 @@ public class SeckillServiceImpl implements SecKillService {
      * @throws RepeatKillException
      * @throws SeckillCloseException
      */
-    public SeckillExecution executeSeckillProcedure(long seckillId, long userPhone, String md5)  {
+    public SeckillExecution executeSeckillProcedure(long seckillId, long userPhone, String md5) {
         if (md5 == null || !md5.equals(getMd5(seckillId))) {
             return new SeckillExecution(seckillId, SeckillStateEnum.DATA_REWRITE);
         }
