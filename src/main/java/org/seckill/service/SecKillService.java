@@ -19,7 +19,7 @@ public interface SecKillService {
      *
      * @return
      */
-    List<Seckill> getSecKillList();
+    List<Seckill> getSecKillList(int page,int rowsPerPage);
 
     /**
      * 查询单个秒杀记录
