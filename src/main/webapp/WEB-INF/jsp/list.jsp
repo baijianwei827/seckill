@@ -48,9 +48,22 @@
                             </td>
                         </tr>
                     </c:forEach>
-
                     </tbody>
                 </table>
+            </div>
+            <div id="pages">
+                <c:choose>
+                    <c:when test="${page>1}">
+                        <a href="/seckill/list/${page-1}">上一页</a>
+                    </c:when>
+                    <c:otherwise><a href="#">上一页</a></c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${page<totalPages}">
+                        <a href="/seckill/list/${page+1}">下一页</a>
+                    </c:when>
+                    <c:otherwise><a href="#">下一页</a></c:otherwise>
+                </c:choose>
             </div>
         </div>
     </div>
