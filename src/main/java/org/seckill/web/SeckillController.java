@@ -37,10 +37,12 @@ public class SeckillController {
      * @return
      */
     @RequestMapping(value="/list/{page}",method = RequestMethod.GET)
+    //使用@PathVariable注解page的页数
     public String list(@PathVariable("page") Integer page,Model model){
         int rowsPerPage=4;
         int start=(page-1)*rowsPerPage;
         List<Seckill> list=secKillService.getSecKillList(start,rowsPerPage);
+        //将查询出的list放入到PageInfo中
         PageInfo pageInfo =new PageInfo(list);
         int totalPages= (int) pageInfo.getPages()+1;
         model.addAttribute("page",page);

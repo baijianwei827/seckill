@@ -144,7 +144,7 @@
       <artifactId>commons-collections</artifactId>
       <version>3.2</version>
     </dependency>
-
+    <!--mybaits分页插件-pagehelper-->
     <dependency>
       <groupId>com.github.pagehelper</groupId>
       <artifactId>pagehelper</artifactId>
