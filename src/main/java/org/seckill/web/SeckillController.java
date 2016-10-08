@@ -1,5 +1,7 @@
 package org.seckill.web;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.seckill.dto.Exposer;
 import org.seckill.dto.SeckillExecution;
 import org.seckill.dto.SeckillResult;
@@ -34,11 +36,17 @@ public class SeckillController {
      * @param model
      * @return
      */
-    @RequestMapping(name="/list",method = RequestMethod.GET)
-    public String list(Model model){
-        List<Seckill> list=secKillService.getSecKillList();
+    @RequestMapping(value="/list/{page}",method = RequestMethod.GET)
+    public String list(@PathVariable("page") Integer page,Model model){
+        int rowsPerPage=4;
+        int start=(page-1)*rowsPerPage;
+        List<Seckill> list=secKillService.getSecKillList(start,rowsPerPage);
+        PageInfo pageInfo =new PageInfo(list);
+        int totalPages= (int) pageInfo.getPages()+1;
+        model.addAttribute("page",page);
+        model.addAttribute("totalPages",totalPages);
         model.addAttribute("list",list);
-        return "list";
+        return "/list";
     }
 
     /**

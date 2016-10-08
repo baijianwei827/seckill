@@ -47,8 +47,8 @@ public class SeckillServiceImpl implements SecKillService {
     // md5盐值字符串，用于混淆MD5
     private final String slat = "sadkfjalsdjfalksj23423^&*^&%&!EBJKH";
 
-    public List<Seckill> getSecKillList() {
-        return secKillDao.queryAll(0, 4);
+    public List<Seckill> getSecKillList(int page,int rowsPerPage) {
+        return secKillDao.queryAll(page, rowsPerPage);
     }
 
     public Seckill getById(long seckillId) {
