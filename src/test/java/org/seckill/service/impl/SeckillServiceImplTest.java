@@ -31,7 +31,7 @@ public class SeckillServiceImplTest {
 
     @Test
     public void testGetSecKillList() throws Exception {
-        List<Seckill> list = secKillService.getSecKillList();
+        List<Seckill> list = secKillService.getSecKillList(0,100);
         logger.info("list={}", list);
     }
 
