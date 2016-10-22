@@ -1,6 +1,5 @@
 package org.seckill.service.impl;
 
-import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.collections.MapUtils;
 import org.seckill.dao.SecKillDao;
 import org.seckill.dao.SuccessKilledDao;
@@ -17,7 +16,6 @@ import org.seckill.service.SecKillService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
@@ -49,6 +47,10 @@ public class SeckillServiceImpl implements SecKillService {
 
     public List<Seckill> getSecKillList(int page,int rowsPerPage) {
         return secKillDao.queryAll(page, rowsPerPage);
+    }
+
+    public int getCount() {
+        return secKillDao.getCount();
     }
 
     public Seckill getById(long seckillId) {

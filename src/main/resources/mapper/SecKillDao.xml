@@ -22,6 +22,12 @@
       order by create_time DESC
       limit #{offset},#{limit}
     </select>
+
+    <!---->
+    <select id="getCount"  resultType="java.lang.Integer">
+        select count(1) from seckill
+    </select>
+
     <!--mybaits调用存储过程-->
 
     <select id="killByProcedure" statementType="CALLABLE">

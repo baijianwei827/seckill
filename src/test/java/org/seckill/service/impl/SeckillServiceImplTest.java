@@ -16,8 +16,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by liwc on 2016/9/26.
  */
@@ -31,7 +29,7 @@ public class SeckillServiceImplTest {
 
     @Test
     public void testGetSecKillList() throws Exception {
-        List<Seckill> list = secKillService.getSecKillList(0,100);
+        List<Seckill> list = secKillService.getSecKillList(0,10);
         logger.info("list={}", list);
     }
 

@@ -38,6 +38,12 @@ public interface SecKillDao {
     List<Seckill> queryAll(@Param("offset") int offset, @Param("limit") int limit);
 
     /**
+     *
+     * @return
+     */
+    int getCount();
+
+    /**
      * 使用存储过程执行秒杀
      * @param paramMap
      */

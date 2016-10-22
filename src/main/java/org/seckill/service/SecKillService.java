@@ -22,6 +22,11 @@ public interface SecKillService {
     List<Seckill> getSecKillList(int page,int rowsPerPage);
 
     /**
+     *
+     * @return
+     */
+    int getCount();
+    /**
      * 查询单个秒杀记录
      *
      * @param seckillId

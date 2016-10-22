@@ -4,12 +4,10 @@ import org.junit.runner.RunWith;
 import org.seckill.entity.Seckill;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import javax.annotation.Resource;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 /**
  * 配置spring和juint的整合,juint启动时加载ioc容器
@@ -36,7 +34,7 @@ public class SecKillDaoTest {
      */
     @org.junit.Test
     public void testQueryAll() throws Exception {
-        List<Seckill> list=secKillDao.queryAll(0,100);
+        List<Seckill> list=secKillDao.queryAll(0,10);
         for(Seckill seckill:list){
             System.out.println(seckill);
         }

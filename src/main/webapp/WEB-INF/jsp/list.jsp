@@ -52,18 +52,34 @@
                 </table>
             </div>
             <div id="pages">
+                <a href="/seckill/list/1" >首页</a>
                 <c:choose>
                     <c:when test="${page>1}">
                         <a href="/seckill/list/${page-1}">上一页</a>
                     </c:when>
                     <c:otherwise><a href="#">上一页</a></c:otherwise>
                 </c:choose>
+
+
+                <c:forEach begin="1" end="2" var="p">
+                    <c:choose>
+                        <c:when test="${page==p}">
+                            <a href="/seckill/list/${p}" class="current_page">${p}</a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="/seckill/list/${p}">${p}</a>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+
+
                 <c:choose>
-                    <c:when test="${page<totalPages}">
+                    <c:when test="${page<totalPage}">
                         <a href="/seckill/list/${page+1}">下一页</a>
                     </c:when>
                     <c:otherwise><a href="#">下一页</a></c:otherwise>
                 </c:choose>
+                <a href="/seckill/list/${totalPage}" >末页</a>
             </div>
         </div>
     </div>
