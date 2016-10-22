@@ -23,7 +23,7 @@
       limit #{offset},#{limit}
     </select>
 
-    <!---->
+    <!--查询总数-->
     <select id="getCount"  resultType="java.lang.Integer">
         select count(1) from seckill
     </select>

@@ -38,7 +38,7 @@ public interface SecKillDao {
     List<Seckill> queryAll(@Param("offset") int offset, @Param("limit") int limit);
 
     /**
-     *
+     *查询总数
      * @return
      */
     int getCount();

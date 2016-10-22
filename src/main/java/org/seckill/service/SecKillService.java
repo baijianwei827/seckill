@@ -22,7 +22,7 @@ public interface SecKillService {
     List<Seckill> getSecKillList(int page,int rowsPerPage);
 
     /**
-     *
+     * 查询总数
      * @return
      */
     int getCount();
